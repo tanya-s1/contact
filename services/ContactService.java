@@ -19,7 +19,6 @@ public class ContactService {
     }
 
     public void addContact(String name, String phoneNumber) {
-        // Validate phone number
         if (phoneNumber.length() != 10) {
             System.out.println("Error: Phone number must be exactly 10 digits!");
             return;
@@ -87,11 +86,15 @@ public class ContactService {
     }
 
     public Optional<Contact> findContactByName(String name) {
-        return contactRepository.getAllContacts()
-                .stream()
-                .filter(c -> c.getName().equalsIgnoreCase(name))
-                .findFirst();
+        List<Contact> contacts = contactRepository.getAllContacts();
+        for (Contact contact : contacts) {
+            if (contact.getName().equalsIgnoreCase(name)) {
+                return Optional.of(contact);
+            }
+        }
+        return Optional.empty();
     }
+    
 
     public boolean updateContactByName(String name, String newName, String newPhoneNumber) {
         Optional<Contact> contactOpt = findContactByName(name);
