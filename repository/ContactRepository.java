@@ -16,9 +16,19 @@ public class ContactRepository {
         return contacts;
     }
 
+    // public Optional<Contact> getContactById(int id) {
+    //     return contacts.stream().filter(c -> c.getId() == id).findFirst();
+    // }
+
     public Optional<Contact> getContactById(int id) {
-        return contacts.stream().filter(c -> c.getId() == id).findFirst();
+    for (Contact c : contacts) {
+        if (c.getId() == id) {
+            return Optional.of(c);
+        }
     }
+    return Optional.empty();
+}
+
 
     public void deleteContact(Contact contact) {
         contacts.remove(contact);
