@@ -3,7 +3,6 @@ package repository;
 import entity.Contact;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class ContactRepository {
     private List<Contact> contacts = new ArrayList<>();
@@ -16,15 +15,14 @@ public class ContactRepository {
         return contacts;
     }
 
-    public Optional<Contact> getContactById(int id) {
+    public Contact getContactById(int id) {
         for (Contact contact : contacts) {
             if (contact.getId() == id) {
-                return Optional.of(contact);
+                return contact;
             }
         }
-        return Optional.empty();
+        return null;
     }
-    
 
     public void deleteContact(Contact contact) {
         contacts.remove(contact);

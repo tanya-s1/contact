@@ -16,18 +16,18 @@ public class ContactController {
             System.out.println("3. Update Contact");
             System.out.println("4. Delete Contact");
             System.out.println("5. Search Contacts by Name");
-            System.out.println("6. Exit");
-
+            System.out.println("6. Search Contacts by Number");
+            System.out.println("7. Exit");
             int choice = scanner.nextInt();
             scanner.nextLine();
-
             switch (choice) {
                 case 1 -> addContact();
                 case 2 -> viewContacts();
                 case 3 -> updateContact();
                 case 4 -> deleteContact();
-                case 5 -> searchContacts();
-                case 6 -> {
+                case 5 -> searchContactsName();
+                case 6 -> searchContactsNumber();
+                case 7 -> {
                     System.out.println("Exiting... Goodbye!");
                     System.exit(0);
                 }
@@ -64,7 +64,7 @@ public class ContactController {
         String newPhone = scanner.nextLine();
 
         if (contactService.updateContactByName(oldName, newName, newPhone)) {
-            System.out.println("Contact updated successfully!");
+            System.out.println("Contact updated successfully");
         } else {
             System.out.println("Contact not found with name: " + oldName);
         }
@@ -75,16 +75,30 @@ public class ContactController {
         String name = scanner.nextLine();
 
         if (contactService.deleteContactByName(name)) {
-            System.out.println("Contact deleted successfully!");
+            System.out.println("Contact deleted successfully");
         } else {
             System.out.println("Contact not found with name: " + name);
         }
     }
 
-    private void searchContacts() {
+    private void searchContactsName() {
         System.out.print("Enter name prefix to search: ");
         String prefix = scanner.nextLine();
         List<Contact> results = contactService.searchContactsByName(prefix);
+
+        if (results.isEmpty()) {
+            System.out.println("No contacts found starting with \"" + prefix + "\".");
+        } else {
+            System.out.println("Matching Contacts:");
+            for (Contact contact : results) {
+                System.out.println(contact);
+            }
+        }
+    }
+    private void searchContactsNumber() {
+        System.out.print("Enter number to search: ");
+        String prefix = scanner.nextLine();
+        List<Contact> results = contactService.searchContactsByNumber(prefix);
 
         if (results.isEmpty()) {
             System.out.println("No contacts found starting with \"" + prefix + "\".");
