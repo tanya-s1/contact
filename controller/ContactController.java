@@ -1,10 +1,7 @@
 package controller;
-
 import services.ContactService;
 import entity.Contact;
-
 import java.util.List;
-// import java.util.Optional;
 import java.util.Scanner;
 
 public class ContactController {
@@ -14,12 +11,6 @@ public class ContactController {
     public void start() {
         while (true) {
             System.out.println("\n--- Contact Management Application ---");
-            // System.out.println("1. Add Contact");
-            // System.out.println("2. View All Contacts");
-            // System.out.println("3. Update Contact");
-            // System.out.println("4. Delete Contact");
-            // System.out.println("5. Exit");
-            // System.out.print("Choose an option: ");
             System.out.println("1. Add Contact");
             System.out.println("2. View All Contacts");
             System.out.println("3. Update Contact");
@@ -28,14 +19,14 @@ public class ContactController {
             System.out.println("6. Exit");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+            scanner.nextLine();
 
             switch (choice) {
                 case 1 -> addContact();
                 case 2 -> viewContacts();
                 case 3 -> updateContact();
                 case 4 -> deleteContact();
-                case 5 -> searchContacts(); // New case
+                case 5 -> searchContacts();
                 case 6 -> {
                     System.out.println("Exiting... Goodbye!");
                     System.exit(0);
@@ -51,7 +42,6 @@ public class ContactController {
         System.out.print("Enter phone number: ");
         String phone = scanner.nextLine();
         contactService.addContact(name, phone);
-        System.out.println("Contact added successfully!");
     }
 
     private void viewContacts() {

@@ -10,8 +10,6 @@ public class Contact {
         this.name = name;
         this.phoneNumber = phoneNumber;
     }
-
-    // Getters and Setters
     public int getId() {
         return id;
     }

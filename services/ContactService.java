@@ -12,27 +12,41 @@ public class ContactService {
     private int idCounter = 1;
 
     public ContactService() {
-        // Hardcoded sample contacts
+
         addContact("Tanya", "9876543210");
         addContact("Tanmay", "9123456789");
         addContact("Anshika", "9988776655");
     }
 
     public void addContact(String name, String phoneNumber) {
-        // Check for duplicate name or phone number
-        boolean exists = contactRepository.getAllContacts()
-                .stream()
-                .anyMatch(c -> c.getName().equalsIgnoreCase(name) || c.getPhoneNumber().equals(phoneNumber));
-
-        if (exists) {
-            System.out.println("Error: Contact with same name or phone number already exists!");
+        // Validate phone number
+        if (phoneNumber.length() != 10) {
+            System.out.println("Error: Phone number must be exactly 10 digits!");
             return;
         }
-
+        for (int i = 0; i < phoneNumber.length(); i++) {
+            char ch = phoneNumber.charAt(i);
+            if (!Character.isDigit(ch)) {
+                System.out.println("Error: Phone number must contain digits only!");
+                return;
+            }
+        }
+        for (Contact c : contactRepository.getAllContacts()) {
+            if (c.getName().equalsIgnoreCase(name)) {
+                System.out.println("Error: Contact with same name already exists!");
+                return;
+            }
+            if (c.getPhoneNumber().equals(phoneNumber)) {
+                System.out.println("Error: Contact with same phone number already exists!");
+                return;
+            }
+        }
+    
         Contact contact = new Contact(idCounter++, name, phoneNumber);
         contactRepository.addContact(contact);
         System.out.println("Contact added successfully!");
     }
+    
 
     public List<Contact> viewAllContacts() {
         return contactRepository.getAllContacts();
